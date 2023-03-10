@@ -1,0 +1,4 @@
+0. Install Python 3.8+
+1. Put the ssl zip file with combindCrt.bat and sslcombind.py at same directory.
+2. Drop the ssl zip to combindCrt.
+3. _domain.crt is the combinded cert.
