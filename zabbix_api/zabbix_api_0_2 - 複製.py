@@ -232,6 +232,19 @@ class zabbixProfile(object):
         jsonbody['params']['templates']=templates
         return self.postRequest(jsonbody)
 
+    def disable_host_batch(self, hostID):
+        jsonbody={
+            "jsonrpc":"2.0",
+            "method":"host.update",
+            "params":{
+                "hostid": hostID
+            },
+            "auth": self.zabbixToken,
+            "id": 1
+        }
+        jsonbody['params']['status']=1
+        return self.postRequest(jsonbody)
+        
     def china_only_creat_host(self, domain, description=None):
         if description is None:
             description=''
@@ -495,7 +508,27 @@ class massupdate_template(zabbixProfile):
             super().update_host_template(response_hostid_tem[0]['hostid'],
                                          [{'templateid':x} for x in selected_template['template']['templates']])
 
+class batch_disable_host(zabbixProfile):
+    def __init__(self):
+        super().__init__()
+        super().inputPassword()
 
+    def disable_host(self):
+        domain_input=[]
+        print('Paste the domain list(:q for quit):')
+        while 1:
+            input_buffer=input('').strip()
+            if input_buffer == '':
+                continue
+            elif input_buffer == ':q':
+                break
+            domain_input.append(input_buffer)
+        for item in domain_input:
+            domain=item.split(':')
+            logging.info('[{date}][INFO] Disable host for \'{domain_name}\' ..'.format(date=cts(), domain_name=item))
+            print('[{date}][INFO] Disable host for \'{domain_name}\' ..'.format(date=cts(), domain_name=item))
+            response_hostid_tem = super().try_get_hostid_description(item)['result']
+            super().disable_host_batch(response_hostid_tem[0]['hostid'])                                        
 
 class test_API_module(zabbixProfile):
     def testResponse(self):
@@ -519,6 +552,7 @@ if __name__ == '__main__':
     print('[2] Create China only host by text.')
     print('[3] Batches add SSL monitor with template.')
     print('[4] Update template by text.')
+    print('[5] Disable host by text.')
     print('[Input another string to leave.]')
 
     inputValue = input('\nInput:')
@@ -535,6 +569,9 @@ if __name__ == '__main__':
     elif inputValue == '4':
         zabbix = massupdate_template()
         zabbix.massupdate_template_change()
+    elif inputValue == '5':
+        zabbix = batch_disable_host()
+        zabbix.disable_host()        
     else:
         exit()
     
