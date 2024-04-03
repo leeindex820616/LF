@@ -102,7 +102,7 @@ if __name__ == "__main__":
             sys.exit(202)
 
     elif apk_file_path.endswith(".ipa") :
-        output_directory_IOS = os.getcwd() + output_directory + "/Payload/FedevProject.app"
+        output_directory_IOS = os.getcwd() + "/" + output_directory + "/Payload/FedevProject.app"
         manifest_file_path = os.path.join(output_directory_IOS, 'main.jsbundle')    
         with open(manifest_file_path, 'r') as file:
             bundle_content = file.read()
