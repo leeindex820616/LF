@@ -46,12 +46,12 @@ def show_popup(message):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
+        #print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
         sys.exit(200)
 
     apk_file_path = sys.argv[1]
     if not os.path.exists(apk_file_path):
-        print("Error: The specified file does not exist.")
+        #print("Error: The specified file does not exist.")
         sys.exit(201)
 
     output_directory = "output_folder"
@@ -103,7 +103,6 @@ if __name__ == "__main__":
                 sys.exit(202)
 
         elif apk_file_path.endswith(".ipa") :
-            print("test")
             output_directory_IOS = os.getcwd() +  output_directory + "/Payload/FedevProject.app"
             manifest_file_path = os.path.join(output_directory_IOS, 'main.jsbundle')    
             with open(manifest_file_path, 'r') as file:
