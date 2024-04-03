@@ -3,8 +3,8 @@ import sys
 import subprocess
 import zipfile
 from xml.dom import minidom
-import tkinter as tk
-from tkinter import messagebox
+#import tkinter as tk
+#from tkinter import messagebox
 
 
 def unzip_apk(apk_file, output_dir):
@@ -38,11 +38,11 @@ def check_bundle_name(bundle_content):
         return sys.exit(222)
 
 
-def show_popup(message):
-    root = tk.Tk()
-    root.withdraw()  # Hide the root window
-    messagebox.showinfo("Result", message)
-    root.destroy()
+#def show_popup(message):
+#    root = tk.Tk()
+#    root.withdraw()  # Hide the root window
+#    messagebox.showinfo("Result", message)
+#    root.destroy()
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
