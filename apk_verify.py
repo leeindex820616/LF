@@ -24,7 +24,7 @@ def check_package_name(manifest_xml):
             application_id = meta_data_node.getAttribute('android:value')
             #return "F1M1P5" in package_name
             return application_id
-        return False
+        return sys.exit(221)
 
 def check_bundle_name(bundle_content):
     index_ios = bundle_content.find('window.CodePushAppNameIOS="')
@@ -35,7 +35,7 @@ def check_bundle_name(bundle_content):
         #print("CodePushAppNameIOS:", code_push_app_name_ios)
         return code_push_app_name_ios
     else:
-        return False
+        return sys.exit(222)
 
 
 def show_popup(message):
