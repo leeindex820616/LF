@@ -45,10 +45,10 @@ def check_bundle_name(bundle_content):
 #    root.destroy()
 
 if __name__ == "__main__":
-    print(len(sys.argv))
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
-        sys.exit(200)
+    #print(len(sys.argv))
+    #if len(sys.argv) != 2:
+    #    print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
+    #    sys.exit(200)
 
     apk_file_path = sys.argv[1]
     if not os.path.exists(apk_file_path):
