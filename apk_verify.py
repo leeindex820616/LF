@@ -46,7 +46,7 @@ def show_popup(message):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        #print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
+        print("Usage: python script_name.py path_to_app_file.apk(or ipa)")
         sys.exit(200)
 
     apk_file_path = sys.argv[1]
@@ -61,84 +61,83 @@ if __name__ == "__main__":
     apk_filename = os.path.basename(apk_file_path)
     contains_package_name =""
     if apk_file_path.startswith('zl_'):
-        #show_popup("Specific package, will upload directly")
+        show_popup("Specific package, will upload directly")
     
+    elif apk_file_path.endswith(".apk") :
+        # Compile AndroidManifest.xml using AXMLPrinter
+        manifest_file_path = os.path.join(output_directory, 'AndroidManifest.xml')
+        compiled_manifest = compile_manifest(manifest_file_path)
+
+        # Check if package name contains "F1M5"
+        contains_package_name = check_package_name(compiled_manifest)
+
+
+        if "com.f1m1.live" in contains_package_name.lower() and apk_filename.startswith('a45Qrj9ppJ'):
+            #show_popup("Package name match filename, Will upload to F1M1P5")
+            sys.exit(101)
+        elif "com.f1m2.live" in contains_package_name.lower() and apk_filename.startswith('KEFv6MFNeKM'):
+            #show_popup("Package name match filename, Will upload to F1M2")
+            sys.exit(102)      
+        elif "com.f1m2p5.live" in contains_package_name.lower() and apk_filename.startswith('SxwxRyvDF5'):
+            #show_popup("Package name match filename, Will upload to F1M2")
+            sys.exit(102)               
+        elif "com.f1m3.live" in contains_package_name.lower() and apk_filename.startswith('uzyfRFCygDM3'):
+            #show_popup("Package name match filename, Will upload to F1M3")
+            sys.exit(103)
+        elif "com.p1m1.live" in contains_package_name.lower() and apk_filename.startswith('0DvPq2K2OK'):
+            #show_popup("Package name does not contain F1M2")
+            #show_popup("Package name match filename, Will upload to P1M1")
+            sys.exit(104)    
+        elif "com.j1m1.live" in contains_package_name.lower() and apk_filename.startswith('rkJpyUhYyG'):
+            #show_popup("Package name match filename, Will upload to J1M1")
+            sys.exit(105)
+        elif "com.j1m2.live" in contains_package_name.lower() and apk_filename.startswith('VcwtFXbzg5'):
+            #show_popup("Package name match filename, Will upload to J1M2")
+            sys.exit(106)
+        elif "com.j1m3.live" in contains_package_name.lower() and apk_filename.startswith('77kDTutEbc'):
+            #show_popup("Package name match filename, Will upload to J1M3")
+            sys.exit(107)                           
+        else :
+            #show_popup("applicationID not match filename, Kindly assist to double check. " + "\nApplicationId: " + contains_package_name)
+            sys.exit(202)
+
+    elif apk_file_path.endswith(".ipa") :
+        output_directory_IOS = os.getcwd() + output_directory + "/Payload/FedevProject.app"
+        manifest_file_path = os.path.join(output_directory_IOS, 'main.jsbundle')    
+        with open(manifest_file_path, 'r') as file:
+            bundle_content = file.read()
+        code_push_app_name = check_bundle_name(bundle_content)    
+        #print(code_push_app_name)
+        if "f1m1-p5-ios" in code_push_app_name.lower() and apk_filename.startswith('a45Qrj9ppJ'):
+            #show_popup("Package name match filename, Will upload to F1M1P5")
+            sys.exit(101)
+        elif "f1m2-live-ios" in code_push_app_name.lower() and apk_filename.startswith('KEFv6MFNeKM'):
+            #show_popup("Package name match filename, Will upload to F1M2")
+            sys.exit(102)    
+        elif "f1m2-live-ios" in code_push_app_name.lower() and apk_filename.startswith('SxwxRyvDF5'):
+            #show_popup("Package name match filename, Will upload to F1M2")
+            sys.exit(102)               
+        elif "f1m3-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('uzyfRFCygDM3'):
+            #show_popup("Package name match filename, Will upload to F1M3")
+            sys.exit(103)
+        elif "f1m3-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('g2Dsv6hNIq'):
+            #show_popup("Package name match filename, Will upload to F1M3")
+            sys.exit(103)    
+        elif "p1m1-cn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('0DvPq2K2OK'):
+            #show_popup("Package name does not contain F1M2")
+            #show_popup("Package name match filename, Will upload to P1M1")
+            sys.exit(104)    
+        elif "jbo-cn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('rkJpyUhYyG'):
+            #show_popup("Package name match filename, Will upload to J1M1")
+            sys.exit(105)
+        elif "jbo-th-live-ios" in code_push_app_name.lower() and apk_filename.startswith('VcwtFXbzg5'):
+            #show_popup("Package name match filename, Will upload to J1M2")
+            sys.exit(106)
+        elif "jbo-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('77kDTutEbc'):
+            #show_popup("Package name match filename, Will upload to J1M3")
+            sys.exit(107)                          
+        else :
+            #show_popup("applicationID not match filename, Kindly assist to double check. " + "\nApplicationId: " + code_push_app_name)
+            sys.exit(202)
     else:
-        if apk_file_path.endswith(".apk") :
-            # Compile AndroidManifest.xml using AXMLPrinter
-            manifest_file_path = os.path.join(output_directory, 'AndroidManifest.xml')
-            compiled_manifest = compile_manifest(manifest_file_path)
-
-            # Check if package name contains "F1M5"
-            contains_package_name = check_package_name(compiled_manifest)
-
-
-            if "com.f1m1.live" in contains_package_name.lower() and apk_filename.startswith('a45Qrj9ppJ'):
-                #show_popup("Package name match filename, Will upload to F1M1P5")
-                sys.exit(101)
-            elif "com.f1m2.live" in contains_package_name.lower() and apk_filename.startswith('KEFv6MFNeKM'):
-                #show_popup("Package name match filename, Will upload to F1M2")
-                sys.exit(102)      
-            elif "com.f1m2p5.live" in contains_package_name.lower() and apk_filename.startswith('SxwxRyvDF5'):
-                #show_popup("Package name match filename, Will upload to F1M2")
-                sys.exit(102)               
-            elif "com.f1m3.live" in contains_package_name.lower() and apk_filename.startswith('uzyfRFCygDM3'):
-                #show_popup("Package name match filename, Will upload to F1M3")
-                sys.exit(103)
-            elif "com.p1m1.live" in contains_package_name.lower() and apk_filename.startswith('0DvPq2K2OK'):
-                #show_popup("Package name does not contain F1M2")
-                #show_popup("Package name match filename, Will upload to P1M1")
-                sys.exit(104)    
-            elif "com.j1m1.live" in contains_package_name.lower() and apk_filename.startswith('rkJpyUhYyG'):
-                #show_popup("Package name match filename, Will upload to J1M1")
-                sys.exit(105)
-            elif "com.j1m2.live" in contains_package_name.lower() and apk_filename.startswith('VcwtFXbzg5'):
-                #show_popup("Package name match filename, Will upload to J1M2")
-                sys.exit(106)
-            elif "com.j1m3.live" in contains_package_name.lower() and apk_filename.startswith('77kDTutEbc'):
-                #show_popup("Package name match filename, Will upload to J1M3")
-                sys.exit(107)                          
-            else :
-                #show_popup("applicationID not match filename, Kindly assist to double check. " + "\nApplicationId: " + contains_package_name)
-                sys.exit(202)
-
-        elif apk_file_path.endswith(".ipa") :
-            output_directory_IOS = os.getcwd() +  output_directory + "/Payload/FedevProject.app"
-            manifest_file_path = os.path.join(output_directory_IOS, 'main.jsbundle')    
-            with open(manifest_file_path, 'r') as file:
-                bundle_content = file.read()
-            code_push_app_name = check_bundle_name(bundle_content)    
-            #print(code_push_app_name)
-            if "f1m1-p5-ios" in code_push_app_name.lower() and apk_filename.startswith('a45Qrj9ppJ'):
-                #show_popup("Package name match filename, Will upload to F1M1P5")
-                sys.exit(101)
-            elif "f1m2-live-ios" in code_push_app_name.lower() and apk_filename.startswith('KEFv6MFNeKM'):
-                #show_popup("Package name match filename, Will upload to F1M2")
-                sys.exit(102)    
-            elif "f1m2-live-ios" in code_push_app_name.lower() and apk_filename.startswith('SxwxRyvDF5'):
-                #show_popup("Package name match filename, Will upload to F1M2")
-                sys.exit(102)               
-            elif "f1m3-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('uzyfRFCygDM3'):
-                #show_popup("Package name match filename, Will upload to F1M3")
-                sys.exit(103)
-            elif "f1m3-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('g2Dsv6hNIq'):
-                #show_popup("Package name match filename, Will upload to F1M3")
-                sys.exit(103)    
-            elif "p1m1-cn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('0DvPq2K2OK'):
-                #show_popup("Package name does not contain F1M2")
-                #show_popup("Package name match filename, Will upload to P1M1")
-                sys.exit(104)    
-            elif "jbo-cn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('rkJpyUhYyG'):
-                #show_popup("Package name match filename, Will upload to J1M1")
-                sys.exit(105)
-            elif "jbo-th-live-ios" in code_push_app_name.lower() and apk_filename.startswith('VcwtFXbzg5'):
-                #show_popup("Package name match filename, Will upload to J1M2")
-                sys.exit(106)
-            elif "jbo-vn-live-ios" in code_push_app_name.lower() and apk_filename.startswith('77kDTutEbc'):
-                #show_popup("Package name match filename, Will upload to J1M3")
-                sys.exit(107)                          
-            else :
-                #show_popup("applicationID not match filename, Kindly assist to double check. " + "\nApplicationId: " + code_push_app_name)
-                sys.exit(202)
-        else:
-            sys.exit(213)
+        sys.exit(211)
