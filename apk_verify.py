@@ -140,3 +140,5 @@ if __name__ == "__main__":
             else :
                 #show_popup("applicationID not match filename, Kindly assist to double check. " + "\nApplicationId: " + code_push_app_name)
                 sys.exit(202)
+        else:
+            sys.exit(213)
